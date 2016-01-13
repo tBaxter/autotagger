@@ -17,7 +17,7 @@ class AutoTag(models.Model):
                     'Django Reinhardt', 'Django Unchained',
                     and any other instance of the phrase.
                     """)
-    articles = models.ManyToManyField('articles.Article', blank=True, null=True, editable=False)
+    articles = models.ManyToManyField('articles.Article', blank=True, editable=False)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey('content_type', 'object_id')

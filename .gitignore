@@ -2,3 +2,5 @@
 dist/autotagger-0.1.tar.gz
 
 autotagger.egg-info/*
+
+*.gz
