@@ -7,12 +7,14 @@ from setuptools import find_packages
 
 setup(
     name='autotagger',
-    version='0.1',
+    version='0.2.0',
     author=u'Tim Baxter',
     author_email='mail.baxter@gmail.com',
     url='http://github.com/tBaxter/autotagger',
     license='LICENSE',
-    description='Takes a given block of text and tags it according to Django models and fields defined in settings',
+    description="""
+        Takes a given block of text and tags it according to Django models
+        and fields defined in settings""",
     long_description=open('README.md').read(),
     packages=find_packages(),
     #install_requires=required,

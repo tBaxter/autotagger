@@ -4,23 +4,24 @@ from django.utils.safestring import mark_safe
 
 from .models import AutoTag
 
+
 def autotag(content_object, text):
     """
     Takes a given block of text and tags it according to models and fields defined in settings:
-    
+
     AUTOTAG_CONTENT = (
       {
         'model'      : 'schools.school',
-        'field'      : 'school',                
-        'check'      : 'is_active',               
+        'field'      : 'school',
+        'check'      : 'is_active',
         'm2m_field'  : 'articles',
         'reverse_m2m': 'politicians',
        },
        ... etc ...
     )
-    
+
     THE FIELDS...
-    model: 
+    model:
         the app and model to check
     field:
         the particular field/value you are matching in the text
@@ -35,7 +36,7 @@ def autotag(content_object, text):
         For example, politicians can be a m2m on articles in some cases.
         If you were tagging politicians in articles, this would add the politician
         to the article's  "politicians" field.
-        
+
     Do NOT attempt to use both m2m and reverse_m2m on the same thing.
     """
     try:
@@ -49,18 +50,18 @@ def autotag(content_object, text):
     for item in tag_settings:
         #print item
         # make sure this thing is actually an installed app
-        app_label     = item['model'].split('.')[0]
-        model_name    = item['model'].split('.')[1]
-        field_name    = item['field']
+        app_label = item['model'].split('.')[0]
+        model_name = item['model'].split('.')[1]
+        field_name = item['field']
         # this try/except may be a bad idea. Maybe we WANT it to blow up.
         try:
             # model is what we're autotagging against (politicians, schools, etc)
             # field is the field we're checking (name, etc)
             content_type = ContentType.objects.get(app_label=app_label, model=model_name)
-            model        = content_type.model_class()
-            field        = model._meta.get_field(field_name)
+            model = content_type.model_class()
+            field = model._meta.get_field(field_name)
             if 'm2m_field' in item:
-                m2m_field  =  model._meta.get_field(item['m2m_field'])
+                m2m_field = model._meta.get_field(item['m2m_field'])
             else:
                 m2m_field = None
             objects = model.objects.all()
@@ -80,8 +81,11 @@ def autotag(content_object, text):
                 # print checkvalues
                 matched = False
                 for checkvalue in checkvalues:
-                    if checkvalue in text and matched == False:   # Make sure it's in there, and not done already
-                        replacement = '<a href="{}" title="More on {}">{}</a>'.format(obj.get_absolute_url(), value, value)
+                    # Make sure value is in text and not matched already
+                    if checkvalue in text and matched is False:
+                        replacement = '<a href="{}" title="More on {}">{}</a>'.format(
+                            obj.get_absolute_url(), value, value
+                        )
                         text = text.replace(value, replacement, 1)
                         matched = True
                         #print text
@@ -105,7 +109,9 @@ def autotag(content_object, text):
             tag.articles.add(content_object.id)
             if tag.content_object:  # since we have a content object, go ahead and link over to it.
                 try:  # wrapped in case get_absolute_url doesn't exist.
-                    replacement = '<a href="{}" title="More on {}">{}</a>'.format(tag.content_object.get_absolute_url(), tag.phrase, tag.phrase)
+                    replacement = '<a href="{}" title="More on {}">{}</a>'.format(
+                        tag.content_object.get_absolute_url(), tag.phrase, tag.phrase
+                    )
                     text = text.replace(tag.phrase, replacement, 1)
                 except:
                     pass
