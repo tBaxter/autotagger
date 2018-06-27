@@ -18,7 +18,12 @@ class AutoTag(models.Model):
                     and any other instance of the phrase.
                     """)
     articles = models.ManyToManyField('articles.Article', blank=True, editable=False)
-    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        blank=True, 
+        null=True,
+    )
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey('content_type', 'object_id')
 

@@ -1,5 +1,8 @@
 # Autotagger Change Log
 
+## 0.2.2
+Updated ForeignKeys to use on_delete argument
+
 ## 0.2.1
 Removed extraneous null argument.
 
