@@ -6,7 +6,7 @@ from setuptools import find_packages
 #    required = f.read().splitlines()
 
 setup(
-    name='autotagger',
+    name='tango-autotagger',
     version='0.2.2',
     author=u'Tim Baxter',
     author_email='mail.baxter@gmail.com',
