@@ -1,5 +1,8 @@
 # Autotagger Change Log
 
+## 0.3.0
+Packaged for PyPi
+
 ## 0.2.2
 Updated ForeignKeys to use on_delete argument
 

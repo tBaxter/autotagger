@@ -5,6 +5,11 @@ Autotagger helps automatically create text links between related objects in Djan
 
 Takes a given block of text and tags it according to models and fields defined in settings.
 
+### Installation
+``` pip install tango-autotagger ```
+
+### SETUP
+
 Example:
     
     AUTOTAG_CONTENT = (
